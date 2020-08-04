@@ -111,7 +111,9 @@ class OwnerBrowseTest {
     }
 
     private Table<Owner> ownersTable(OwnerBrowse ownerBrowse) {
-        return (Table<Owner>) ownerBrowse.getWindow().getComponent("ownersTable");
+        return (Table<Owner>) ownerBrowse
+                .getWindow()
+                .getComponent("ownersTable");
     }
 
     private Component editButton(OwnerBrowse ownerBrowse) {
