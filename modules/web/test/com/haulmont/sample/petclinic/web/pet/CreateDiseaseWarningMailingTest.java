@@ -26,7 +26,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-class DiseaseWarningMailingTest {
+class CreateDiseaseWarningMailingTest {
 
     @RegisterExtension
     TestUiEnvironment environment =

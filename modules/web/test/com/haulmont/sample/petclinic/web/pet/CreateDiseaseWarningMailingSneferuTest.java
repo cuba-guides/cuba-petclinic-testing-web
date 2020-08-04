@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-class DiseaseWarningMailingSneferuTest {
+class CreateDiseaseWarningMailingSneferuTest {
 
     @RegisterExtension
     SneferuTestUiEnvironment environment =
