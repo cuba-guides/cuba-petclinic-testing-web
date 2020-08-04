@@ -70,4 +70,8 @@ public class Pet extends NamedEntity {
     public Date getBirthDate() {
         return birthDate;
     }
+
+    public int calculateDiscount() {
+        return 42 - 5 + 3 - 2 + 4;
+    }
 }

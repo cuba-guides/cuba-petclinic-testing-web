@@ -20,54 +20,38 @@ import javax.inject.Inject;
 public class PetBrowse extends StandardLookup<Pet> {
 
   @Inject
-  protected Metadata metadata;
-  @Inject
   protected GroupTable<Pet> petsTable;
   @Inject
-  protected VisitService visitService;
-  @Inject
-  protected Dialogs dialogs;
+  protected Notifications notifications;
   @Inject
   private Screens screens;
 
   @Subscribe("petsTable.createDiseaseWarningMailing")
-  public void createDiseaseWarningMailing(ActionPerformedEvent actionPerformedEvent) {
-    screens.create(CreateDiseaseWarningMailing.class, OpenMode.DIALOG).show();
+  public void createDiseaseWarningMailing(
+          ActionPerformedEvent actionPerformedEvent
+  ) {
+    screens.create(
+            CreateDiseaseWarningMailing.class,
+            OpenMode.DIALOG
+    ).show();
   }
 
 
   @Subscribe("petsTable.calculateDiscount")
-  public void calculateDiscount(ActionPerformedEvent actionPerformedEvent) {
+  public void calculateDiscount(
+          ActionPerformedEvent actionPerformedEvent
+  ) {
 
     Pet pet = petsTable.getSingleSelected();
 
-    int discount = calculateDiscount(pet);
+    String discountMessage = String.format(
+            "Discount for %s: %s",
+            pet.getName(),
+            pet.calculateDiscount()
+    );
 
-    showDiscountCalculatedNotification(pet, discount);
-  }
-
-
-  private void showDiscountCalculatedNotification(Pet pet, int discount) {
-
-    String petName = metadata.getTools().getInstanceName(pet);
-
-    String discountMessage = "Discount for " + petName + ": " + discount + "%";
-
-    dialogs
-        .createMessageDialog()
-        .withMessage(discountMessage)
-        .show();
-  }
-
-  private int calculateDiscount(Pet pet) {
-    int discount = 0;
-
-    int visitAmount = visitService.countVisitsForPet(pet);
-    if (visitAmount > 10) {
-      discount = 10;
-    } else if (visitAmount > 5) {
-      discount = 5;
-    }
-    return discount;
+    notifications.create(NotificationType.TRAY)
+            .withCaption(discountMessage)
+            .show();
   }
 }
